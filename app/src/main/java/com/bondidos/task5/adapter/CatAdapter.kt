@@ -22,11 +22,13 @@ class CatAdapter() : RecyclerView.Adapter<CatViewHolder>() {
             )
         )
     }
+    override fun getItemCount(): Int {
+        return cats.size
+    }
 
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
-        val item = cats[position]
-        //todo write this method
-        holder.onBind(item)
+        val pictureUrl = cats[position].picture
+        holder.onBind(pictureUrl)
     }
 
     fun addItems(newItems: List<Cat>) {
@@ -34,8 +36,6 @@ class CatAdapter() : RecyclerView.Adapter<CatViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int {
-        return cats.size
-    }
+
 
 }

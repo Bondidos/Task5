@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bondidos.task5.App
 import com.bondidos.task5.adapter.cat_holder.Cat
 import kotlinx.coroutines.launch
 
@@ -15,7 +16,7 @@ class CatViewModel: ViewModel() {
 
     init{
         viewModelScope.launch {
-            //_items.value = //todo get from API
+            _items.value = App().getListCats()
         }
     }
 }

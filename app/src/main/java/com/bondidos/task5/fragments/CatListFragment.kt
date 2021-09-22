@@ -37,6 +37,7 @@ class CatListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //receive list for recycler from viewModel
         initRecyclerView()
+        initObserver()
     }
 
     private fun initRecyclerView(){
