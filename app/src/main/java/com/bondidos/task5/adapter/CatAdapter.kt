@@ -1,16 +1,23 @@
 package com.bondidos.task5.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 
 import com.bondidos.task5.adapter.cat_holder.Cat
 import com.bondidos.task5.adapter.cat_holder.CatViewHolder
 import com.bondidos.task5.databinding.CatItemBinding
+import com.bondidos.task5.model.CatViewModel
+import kotlinx.coroutines.withContext
 
-class CatAdapter() : RecyclerView.Adapter<CatViewHolder>() {
+const val TAG="CatAdapter"
+class CatAdapter(/*private val catViewModel: CatViewModel*/) : RecyclerView.Adapter<CatViewHolder>() {
 
     private val cats = mutableListOf<Cat>()
+    val page: MutableLiveData<Int> = MutableLiveData(0)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
 
@@ -36,6 +43,11 @@ class CatAdapter() : RecyclerView.Adapter<CatViewHolder>() {
         notifyDataSetChanged()
     }
 
-
-
+    override fun onViewAttachedToWindow(holder: CatViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if(holder.absoluteAdapterPosition == cats.size-3) {
+            Log.d(TAG,"cat.size = ${cats.size}, attached to window: ${holder.absoluteAdapterPosition}")
+            page.value = +1
+        }
+    }
 }

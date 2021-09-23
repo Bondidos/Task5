@@ -1,23 +1,26 @@
 package com.bondidos.task5.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.adapter.CatAdapter
 import com.bondidos.task5.databinding.FragmentCatsListBinding
 import com.bondidos.task5.model.CatViewModel
 
+const val TAG ="CatListFragment"
 
 class CatListFragment : Fragment() {
 
     private var _binding: FragmentCatsListBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val catAdapter = CatAdapter()
     private val catViewModel: CatViewModel by activityViewModels()
+    private val catAdapter = CatAdapter()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +44,7 @@ class CatListFragment : Fragment() {
     }
 
     private fun initRecyclerView(){
+
         with(binding){
             recycler.apply {
                 layoutManager = LinearLayoutManager(root.context)
@@ -48,12 +52,16 @@ class CatListFragment : Fragment() {
             }
         }
     }
+
     private fun initObserver(){
         catViewModel.cats.observe(viewLifecycleOwner){
             list ->
             list.let{
                 catAdapter.addItems(it)
             }
+        }
+        catAdapter.page.observe(viewLifecycleOwner){page ->
+            catViewModel.loadNextPage()
         }
     }
     override fun onDestroy() {

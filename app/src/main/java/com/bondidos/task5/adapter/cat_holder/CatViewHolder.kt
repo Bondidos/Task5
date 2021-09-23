@@ -8,15 +8,13 @@ import com.bumptech.glide.Glide
 
 class CatViewHolder(binding: CatItemBinding) : RecyclerView.ViewHolder(binding.root) {
     private val imageView = binding.catView
-    //private val details = binding.catDetails
 
     fun onBind(pictureUrl: String){
-        Log.d("CatViewHolder","Url: $pictureUrl")
+        //Log.d("CatViewHolder","Url: $pictureUrl")
         Glide.with(imageView)
             .load(pictureUrl)
             .placeholder(R.drawable.ic_baseline_360_24)
             .error(R.drawable.ic_baseline_error_24)
             .into(imageView)
-       // imageView.load(pictureUrl)
     }
 }

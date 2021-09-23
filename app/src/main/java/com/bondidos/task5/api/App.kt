@@ -1,8 +1,7 @@
-package com.bondidos.task5
+package com.bondidos.task5.api
 
 import android.app.Application
 import com.bondidos.task5.adapter.cat_holder.Cat
-import com.bondidos.task5.api.CatApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -18,9 +17,9 @@ class App: Application() {
 
     private val catService = retrofit.create(CatApi::class.java)
 
-    suspend fun getListCats(): List<Cat> {
+    suspend fun getListCats(limit: Int,page: Int): List<Cat> {
           return withContext(Dispatchers.IO) {
-             catService.getListCats().body() ?: emptyList()
+             catService.getListCats(limit, page).body() ?: emptyList()
         }
     }
 }
