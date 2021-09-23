@@ -10,14 +10,16 @@ import androidx.lifecycle.MutableLiveData
 import com.bondidos.task5.adapter.cat_holder.Cat
 import com.bondidos.task5.adapter.cat_holder.CatViewHolder
 import com.bondidos.task5.databinding.CatItemBinding
+import com.bondidos.task5.fragments.FragmentNavigation
 import com.bondidos.task5.model.CatViewModel
 import kotlinx.coroutines.withContext
 
 const val TAG="CatAdapter"
-class CatAdapter(/*private val catViewModel: CatViewModel*/) : RecyclerView.Adapter<CatViewHolder>() {
+class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
 
     private val cats = mutableListOf<Cat>()
     val page: MutableLiveData<Int> = MutableLiveData(0)
+    val catForDetails: MutableLiveData<Cat> = MutableLiveData()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
 
@@ -36,6 +38,9 @@ class CatAdapter(/*private val catViewModel: CatViewModel*/) : RecyclerView.Adap
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
         val pictureUrl = cats[position].picture
         holder.onBind(pictureUrl)
+        holder.itemView.setOnClickListener {
+            catForDetails.value = cats[position]
+        }
     }
 
     fun addItems(newItems: List<Cat>) {

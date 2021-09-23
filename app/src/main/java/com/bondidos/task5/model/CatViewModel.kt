@@ -26,6 +26,14 @@ class CatViewModel: ViewModel() {
         }
 
     }*/
+    private val catToDetailsFragment: MutableLiveData<Cat> = MutableLiveData()
+    fun setCat(cat: Cat){
+        catToDetailsFragment.value = cat
+    }
+    fun getCat() = catToDetailsFragment.value
+
+
+
     fun loadNextPage(){
         viewModelScope.launch {
             page++

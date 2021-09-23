@@ -11,6 +11,7 @@ class CatViewHolder(binding: CatItemBinding) : RecyclerView.ViewHolder(binding.r
 
     fun onBind(pictureUrl: String){
         //Log.d("CatViewHolder","Url: $pictureUrl")
+
         Glide.with(imageView)
             .load(pictureUrl)
             .placeholder(R.drawable.ic_baseline_360_24)
