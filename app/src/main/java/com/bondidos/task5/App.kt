@@ -17,28 +17,10 @@ class App: Application() {
         .build()
 
     private val catService = retrofit.create(CatApi::class.java)
-    private val list = mutableListOf<Cat>()
 
-    suspend fun getListCats(): List<Cat>{
-        /*return withContext(Dispatchers.IO){
-            catService.getListCats()
-                .list
-                .map { catData ->
-                    Cat(
-                        catData.id,
-                        catData.picture
-                    )
-                }
-        }*/
-        return withContext(Dispatchers.IO){
-            val item = catService.getListCats()
-            list.add(
-                Cat(
-                    item.id,
-                    item.url
-                )
-            )
-            list
+    suspend fun getListCats(): List<Cat> {
+          return withContext(Dispatchers.IO) {
+             catService.getListCats().body() ?: emptyList()
         }
     }
 }
