@@ -17,6 +17,7 @@ class App: Application() {
 
     private val catService = retrofit.create(CatApi::class.java)
 
+    //todo add check for response code
     suspend fun getListCats(limit: Int,page: Int): List<Cat> {
           return withContext(Dispatchers.IO) {
              catService.getListCats(limit, page).body() ?: emptyList()

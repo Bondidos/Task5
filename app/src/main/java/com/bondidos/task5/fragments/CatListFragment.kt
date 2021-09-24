@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.MainActivity
 import com.bondidos.task5.adapter.CatAdapter
+import com.bondidos.task5.adapter.PaginationScrollListener
 import com.bondidos.task5.databinding.FragmentCatsListBinding
 import com.bondidos.task5.model.CatViewModel
 
@@ -56,9 +57,16 @@ class CatListFragment : Fragment() {
             recycler.apply {
                 layoutManager = LinearLayoutManager(root.context)
                 adapter = catAdapter
+                //pagination
+                addOnScrollListener(object: PaginationScrollListener(layoutManager as LinearLayoutManager){
+                    override fun loadNextPage() {
+                        catViewModel.loadNextPage()
+                    }
+                })
             }
         }
     }
+
 
     private fun initObserver(){
         catViewModel.cats.observe(viewLifecycleOwner){
@@ -67,9 +75,10 @@ class CatListFragment : Fragment() {
                 catAdapter.addItems(it)
             }
         }
-        catAdapter.page.observe(viewLifecycleOwner){page ->
+        //Old pagination (Kostil')
+        /*catAdapter.page.observe(viewLifecycleOwner){page ->
             catViewModel.loadNextPage()
-        }
+        }*/
         catAdapter.catForDetails.observe(viewLifecycleOwner){cat ->
             catViewModel.setCat(cat)
             navigation?.navigateDetailsFragment()

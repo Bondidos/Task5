@@ -19,13 +19,14 @@ class CatViewModel: ViewModel() {
     val cats: LiveData<List<Cat>>
     get() = _items
 
-   /* init{
+    init{
         viewModelScope.launch {
             _items.value = App().getListCats(limit,page)
             Log.d(TAG,"init")
         }
 
-    }*/
+    }
+
     private val catToDetailsFragment: MutableLiveData<Cat> = MutableLiveData()
     fun setCat(cat: Cat){
         catToDetailsFragment.value = cat

@@ -18,7 +18,6 @@ const val TAG="CatAdapter"
 class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
 
     private val cats = mutableListOf<Cat>()
-    val page: MutableLiveData<Int> = MutableLiveData(0)
     val catForDetails: MutableLiveData<Cat> = MutableLiveData()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
@@ -46,13 +45,5 @@ class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
     fun addItems(newItems: List<Cat>) {
         cats.addAll(newItems)
         notifyDataSetChanged()
-    }
-
-    override fun onViewAttachedToWindow(holder: CatViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        if(holder.absoluteAdapterPosition == cats.size-3) {
-            Log.d(TAG,"cat.size = ${cats.size}, attached to window: ${holder.absoluteAdapterPosition}")
-            page.value = +1
-        }
     }
 }
