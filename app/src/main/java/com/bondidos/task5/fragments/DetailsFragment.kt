@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.bondidos.task5.MainActivity
 import com.bondidos.task5.R
+import com.bondidos.task5.adapter.cat_holder.Cat
 import com.bondidos.task5.databinding.FragmentDetailsBinding
 import com.bondidos.task5.model.CatViewModel
 import com.bumptech.glide.Glide
+import com.bondidos.task5.utils.*
 
 class DetailsFragment : Fragment() {
 
@@ -19,6 +21,8 @@ class DetailsFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
     private val catViewModel: CatViewModel by activityViewModels()
     private var navigation: FragmentNavigation? = null
+    private val cat: Cat?  get() = catViewModel.getCat()
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -40,10 +44,11 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setImage()
+        initButton()
     }
 
     private fun setImage(){
-        val cat = catViewModel.getCat()
+
         with(binding){
 
         Glide.with(catView)
@@ -51,6 +56,12 @@ class DetailsFragment : Fragment() {
             .placeholder(R.drawable.ic_baseline_360_24)
             .error(R.drawable.ic_baseline_error_24)
             .into(catView)
+        }
+    }
+
+    private fun initButton(){
+        binding.btnSave.setOnClickListener {
+            cat?.downloadAndSave(requireNotNull(context))
         }
     }
 

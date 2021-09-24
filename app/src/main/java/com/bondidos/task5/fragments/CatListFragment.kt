@@ -75,10 +75,7 @@ class CatListFragment : Fragment() {
                 catAdapter.addItems(it)
             }
         }
-        //Old pagination (Kostil')
-        /*catAdapter.page.observe(viewLifecycleOwner){page ->
-            catViewModel.loadNextPage()
-        }*/
+
         catAdapter.catForDetails.observe(viewLifecycleOwner){cat ->
             catViewModel.setCat(cat)
             navigation?.navigateDetailsFragment()

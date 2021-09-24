@@ -37,6 +37,7 @@ class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
         val pictureUrl = cats[position].picture
         holder.onBind(pictureUrl)
+            //onClick open details
         holder.itemView.setOnClickListener {
             catForDetails.value = cats[position]
         }
