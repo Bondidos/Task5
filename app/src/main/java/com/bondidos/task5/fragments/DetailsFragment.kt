@@ -52,19 +52,18 @@ class DetailsFragment : Fragment() {
         with(binding){
 
         Glide.with(catView)
-            .load(cat?.picture)
+            .load(cat?.url)
             .placeholder(R.drawable.ic_baseline_360_24)
             .error(R.drawable.ic_baseline_error_24)
             .into(catView)
         }
     }
-
+    
     private fun initButton(){
         binding.btnSave.setOnClickListener {
-            cat?.downloadAndSave(requireNotNull(context))
+            downloadAndSave(requireNotNull(context), requireNotNull(cat))
         }
     }
-
 
     override fun onDestroy() {
         _binding = null
