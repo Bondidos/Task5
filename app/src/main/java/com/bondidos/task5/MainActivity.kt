@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
             R.anim.flip_in,
             R.anim.flip_out
         )
-        transaction.replace(binding.Container.id,fragment) .commit()
+        transaction.replace(binding.Container.id,fragment).commit()
 
     }
 
@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
     }
 
     override fun onBackPressed() {
-
         navigateListFragment()
     }
 }

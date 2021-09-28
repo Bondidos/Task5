@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.MainActivity
 import com.bondidos.task5.R
@@ -56,7 +57,8 @@ class CatListFragment : Fragment() {
 
         with(binding){
             recycler.apply {
-                layoutManager = LinearLayoutManager(root.context)
+                layoutManager = GridLayoutManager(root.context,2)
+                    //LinearLayoutManager(root.context)
                 adapter = catAdapter
                 //pagination
                 addOnScrollListener(object: PaginationScrollListener(layoutManager as LinearLayoutManager){
