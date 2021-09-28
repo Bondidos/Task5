@@ -2,6 +2,7 @@ package com.bondidos.task5.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.MainActivity
+import com.bondidos.task5.R
 import com.bondidos.task5.adapter.CatAdapter
 import com.bondidos.task5.adapter.PaginationScrollListener
 import com.bondidos.task5.databinding.FragmentCatsListBinding
@@ -33,7 +35,6 @@ class CatListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(

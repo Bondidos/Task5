@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
     override fun navigateListFragment() {
         fragment        = CatListFragment.newInstance()
         transaction     = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.flip_in,
+            R.anim.flip_out
+        )
         transaction.replace(binding.Container.id,fragment) .commit()
 
     }
@@ -31,6 +35,15 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
     override fun navigateDetailsFragment() {
         fragment        = DetailsFragment.newInstance()
         transaction     = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.flip_in,
+            R.anim.flip_out
+        )
         transaction.replace(binding.Container.id,fragment) .commit()
+    }
+
+    override fun onBackPressed() {
+
+        navigateListFragment()
     }
 }

@@ -2,11 +2,13 @@ package com.bondidos.task5.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.transition.Transition
 import com.bondidos.task5.MainActivity
 import com.bondidos.task5.R
 import com.bondidos.task5.adapter.cat_holder.Cat
