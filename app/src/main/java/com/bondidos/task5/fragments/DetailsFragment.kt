@@ -43,20 +43,28 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setImage()
+        setImageAndText()
         initButton()
     }
 
-    private fun setImage(){
+    private fun setImageAndText(){
 
         with(binding){
-
+        //load image
         Glide.with(catView)
             .load(cat?.url)
             .placeholder(R.drawable.ic_baseline_360_24)
             .error(R.drawable.ic_baseline_error_24)
             .into(catView)
+
+            //load Description
+            description.text = cat?.breeds?.let {
+                if(!it.isEmpty()) {
+                    it[0].description
+                } else "No Description"
+            }.toString()
         }
+
     }
     
     private fun initButton(){

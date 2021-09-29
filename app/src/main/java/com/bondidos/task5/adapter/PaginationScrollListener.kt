@@ -1,9 +1,9 @@
 package com.bondidos.task5.adapter
 
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class PaginationScrollListener(private val layoutManager: LinearLayoutManager): RecyclerView.OnScrollListener() {
+abstract class PaginationScrollListener(private val layoutManager: GridLayoutManager): RecyclerView.OnScrollListener() {
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -14,6 +14,8 @@ abstract class PaginationScrollListener(private val layoutManager: LinearLayoutM
         val totalItemCount = layoutManager.itemCount
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
+        saveFirstVisibleItemPosition(firstVisibleItemPosition)
+
         if((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
             && firstVisibleItemPosition >=0){
             loadNextPage()
@@ -21,5 +23,6 @@ abstract class PaginationScrollListener(private val layoutManager: LinearLayoutM
     }
 
     protected abstract fun loadNextPage()
+    protected abstract fun saveFirstVisibleItemPosition(position: Int)
 
 }

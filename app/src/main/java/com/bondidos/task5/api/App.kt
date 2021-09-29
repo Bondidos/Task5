@@ -11,8 +11,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class App: Application() {
 
-    //catService
-    val catListService = CatListService()
+    //catListService
+    //val catListService = CatListService()
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
@@ -24,7 +24,7 @@ class App: Application() {
     //todo add check for response code
     suspend fun getListCats(limit: Int,page: Int): List<Cat> {
           return withContext(Dispatchers.IO) {
-             catNetworkService.getListCats(limit, page).body() ?: emptyList()
+             catNetworkService.getListCats(limit, page)
         }
     }
 }

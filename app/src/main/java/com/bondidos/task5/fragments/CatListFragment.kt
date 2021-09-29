@@ -10,13 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.MainActivity
 import com.bondidos.task5.R
 import com.bondidos.task5.adapter.CatAdapter
 import com.bondidos.task5.adapter.PaginationScrollListener
+import com.bondidos.task5.api.App
 import com.bondidos.task5.databinding.FragmentCatsListBinding
+import com.bondidos.task5.model.CatListService
+
 import com.bondidos.task5.model.CatViewModel
 
 const val TAG ="CatListFragment"
@@ -27,7 +31,9 @@ class CatListFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
     private val catViewModel: CatViewModel by activityViewModels()
     private var navigation: FragmentNavigation? = null
-    private val catAdapter = CatAdapter()
+    private var catAdapter = CatAdapter()
+    private val catListService: CatListService by activityViewModels()
+    //get() = (context?.applicationContext as App).catListService
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,6 +58,9 @@ class CatListFragment : Fragment() {
         initRecyclerView()
         initObserver()
     }
+   /* private val catListener: CatListener = {
+        catAdapter.cats = it
+    }*/
 
     private fun initRecyclerView(){
 
@@ -61,21 +70,26 @@ class CatListFragment : Fragment() {
                     //LinearLayoutManager(root.context)
                 adapter = catAdapter
                 //pagination
-                addOnScrollListener(object: PaginationScrollListener(layoutManager as LinearLayoutManager){
+                addOnScrollListener(object: PaginationScrollListener(layoutManager as GridLayoutManager){
                     override fun loadNextPage() {
-                        catViewModel.loadNextPage()
+                        catListService.getNextPage()
+                    }
+
+                    override fun saveFirstVisibleItemPosition(position: Int) {
+                        catListService.firstVisibleItem = position
                     }
                 })
+                scrollToPosition(catListService.firstVisibleItem)
             }
         }
     }
 
 
     private fun initObserver(){
-        catViewModel.cats.observe(viewLifecycleOwner){
+        catListService.cats.observe(viewLifecycleOwner){
             list ->
             list.let{
-                catAdapter.addItems(it)
+                catAdapter.cats = it
             }
         }
 
@@ -83,8 +97,11 @@ class CatListFragment : Fragment() {
             catViewModel.setCat(cat)
             navigation?.navigateDetailsFragment()
         }
+        //catListService.addListener(catListener)
+
     }
     override fun onDestroy() {
+       // catListService.removeListener(catListener)
         _binding = null
         super.onDestroy()
     }

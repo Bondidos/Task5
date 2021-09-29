@@ -13,9 +13,9 @@ const val ORDER = "order=DESC"
 interface CatApi {
 //"$QUERY?$LIMIT&${PAGE}&$ORDER"
    // @Headers(KEY_HEADER)
-    @GET(QUERY)
+    @GET(QUERY+ ORDER)
     suspend fun getListCats(
     @Query("limit") n: Int,
     @Query("page") p: Int
-): Response<List<Cat>>
+): List<Cat>
 }

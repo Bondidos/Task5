@@ -12,7 +12,12 @@ import com.bondidos.task5.databinding.CatItemBinding
 const val TAG="CatAdapter"
 class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
 
-    private val cats = mutableListOf<Cat>()
+    var cats = emptyList<Cat>()
+    set(value) {
+        field = value
+        notifyDataSetChanged()
+    }
+
     val catForDetails: MutableLiveData<Cat> = MutableLiveData()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
@@ -36,10 +41,5 @@ class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
         holder.itemView.setOnClickListener {
             catForDetails.value = cats[position]
         }
-    }
-
-    fun addItems(newItems: List<Cat>) {
-        cats.addAll(newItems)
-        notifyDataSetChanged()
     }
 }
