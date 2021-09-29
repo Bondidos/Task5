@@ -1,4 +1,4 @@
-package com.bondidos.task5.adapter.cat_holder
+package com.bondidos.task5.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

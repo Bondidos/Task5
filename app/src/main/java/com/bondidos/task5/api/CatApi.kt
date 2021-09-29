@@ -1,9 +1,8 @@
 package com.bondidos.task5.api
 
-import com.bondidos.task5.adapter.cat_holder.Cat
+import com.bondidos.task5.model.Cat
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 const val KEY_HEADER = "x-api-key: 5c353ca9-8022-4ed1-880a-ae133a691483"
