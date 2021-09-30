@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 
 import com.bondidos.task5.model.Cat
-import com.bondidos.task5.adapter.cat_holder.CatViewHolder
 import com.bondidos.task5.databinding.CatItemBinding
 
 const val TAG="CatAdapter"

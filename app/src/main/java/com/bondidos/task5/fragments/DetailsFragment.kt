@@ -1,6 +1,7 @@
 package com.bondidos.task5.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import com.bondidos.task5.MainActivity
 import com.bondidos.task5.R
 import com.bondidos.task5.model.Cat
 import com.bondidos.task5.databinding.FragmentDetailsBinding
-import com.bondidos.task5.model.CatViewModel
+import com.bondidos.task5.model.CatListService
 import com.bumptech.glide.Glide
 import com.bondidos.task5.utils.*
 
@@ -19,9 +20,9 @@ class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val catViewModel: CatViewModel by activityViewModels()
+    private val catListService: CatListService by activityViewModels()
     private var navigation: FragmentNavigation? = null
-    private val cat: Cat?  get() = catViewModel.getCat()
+    private val cat: Cat?  get() = catListService.getCat()
 
 
     override fun onAttach(context: Context) {
@@ -29,14 +30,11 @@ class DetailsFragment : Fragment() {
         navigation = context as MainActivity
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+       
         _binding = FragmentDetailsBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -70,6 +68,14 @@ class DetailsFragment : Fragment() {
     private fun initButton(){
         binding.btnSave.setOnClickListener {
             downloadAndSave(requireNotNull(context), requireNotNull(cat))
+        }
+        binding.btnShare.setOnClickListener {
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, cat?.url)
+                type = "image/*"
+            }//resources.getText(R.string.send_to)
+            startActivity(Intent.createChooser(shareIntent,"Share Cat" ))
         }
     }
 

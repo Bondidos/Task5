@@ -1,4 +1,4 @@
-package com.bondidos.task5.adapter
+package com.bondidos.task5.adapter.pagination
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView

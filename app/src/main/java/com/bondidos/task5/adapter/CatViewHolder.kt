@@ -1,4 +1,4 @@
-package com.bondidos.task5.adapter.cat_holder
+package com.bondidos.task5.adapter
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView

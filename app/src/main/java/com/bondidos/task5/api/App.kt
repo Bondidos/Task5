@@ -2,7 +2,6 @@ package com.bondidos.task5.api
 
 import android.app.Application
 import com.bondidos.task5.model.Cat
-import com.bondidos.task5.model.CatListService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
