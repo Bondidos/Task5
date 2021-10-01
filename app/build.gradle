@@ -65,12 +65,12 @@ dependencies {
 
     //spec
     // some version of Kotlin
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk11:1.6.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31"
 
     testImplementation 'org.spekframework.spek2:spek-dsl-jvm:2.0.17'
     testImplementation 'org.spekframework.spek2:spek-runner-junit5:2.0.17'
     // spek requires kotlin-reflect, can be omitted if already in the classpath
-    testImplementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.0'
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:1.5.31"
 
     //MockK
     testImplementation "io.mockk:mockk:1.12.0"
