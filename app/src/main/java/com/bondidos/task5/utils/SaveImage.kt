@@ -91,7 +91,7 @@ private fun saveImage(context: Context, resolver: ContentResolver, values: Conte
 
                 resolver.openOutputStream(uri)?.use {
                     it.write(gif, 0, gif.size)
-                    showToast("Image saved.", context)
+                    showToast("Image saved to DCIM/savedCats", context)
                 } ?: throw IOException("Failed to open output stream.")
             }
         } catch (e: IOException){

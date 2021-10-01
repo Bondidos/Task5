@@ -16,7 +16,14 @@ class CatListService: ViewModel() {
     private var page = 0
     private val limit = 10
     var firstVisibleItem = 0
+
     private val catToDetailsFragment: MutableLiveData<Cat> = MutableLiveData()
+
+    fun setCat(cat: Cat){
+        catToDetailsFragment.value = cat
+    }
+    fun getCat() = catToDetailsFragment.value
+
 
     private val _cats = MutableLiveData<List<Cat>>()
     val cats: LiveData<List<Cat>>
@@ -39,9 +46,4 @@ class CatListService: ViewModel() {
             _cats.value = list
         }
     }
-
-    fun setCat(cat: Cat){
-        catToDetailsFragment.value = cat
-    }
-    fun getCat() = catToDetailsFragment.value
 }

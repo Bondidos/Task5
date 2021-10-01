@@ -69,7 +69,8 @@ class DetailsFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             downloadAndSave(requireNotNull(context), requireNotNull(cat))
         }
-        binding.btnShare.setOnClickListener {
+        //todo share image
+            binding.btnShare.setOnClickListener {
             val shareIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_STREAM, cat?.url)
