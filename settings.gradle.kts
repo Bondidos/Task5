@@ -7,4 +7,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Task5"
-include ':app'
+include (":app")

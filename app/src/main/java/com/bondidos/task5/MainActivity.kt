@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-
+        //toolbar
         binding.toolbarActionbar.setNavigationOnClickListener {
             navigateListFragment()
         }
@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
 
     }
 
-
     override fun navigateDetailsFragment() {
 
         binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
@@ -57,4 +56,5 @@ class MainActivity : AppCompatActivity(), FragmentNavigation{
         )
         transaction.replace(binding.Container.id,fragment).commit()
     }
+    //todo save instance
 }
