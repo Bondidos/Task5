@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         setContentView(binding.root)
 
         // show icon
-        if(savedInstanceState !=null) {
+        if (savedInstanceState != null) {
             val showIcon = savedInstanceState.getBoolean(setNaviIcon)
             if (showIcon) {
                 binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                 R.anim.flip_in,
                 R.anim.flip_out
             )
-            .replace(binding.Container.id,CatListFragment.newInstance())
+            .replace(binding.Container.id, CatListFragment.newInstance())
             .commit()
 
     }
@@ -62,12 +62,12 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                 R.anim.flip_in,
                 R.anim.flip_out
             )
-            .replace(binding.Container.id,DetailsFragment.newInstance())
+            .replace(binding.Container.id, DetailsFragment.newInstance())
             .commit()
-        }
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(setNaviIcon,isShowNavigationIcon)
+        outState.putBoolean(setNaviIcon, isShowNavigationIcon)
         super.onSaveInstanceState(outState)
     }
 

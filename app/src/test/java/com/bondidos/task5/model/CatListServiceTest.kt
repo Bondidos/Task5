@@ -1,5 +1,37 @@
 package com.bondidos.task5.model
 
-import org.junit.Assert.*
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import com.bondidos.task5.api.Cat
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
-class CatListServiceTest
+
+class CatListServiceTest{
+
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
+
+    private lateinit var observer: Observer<Cat>
+    private lateinit var catListService: CatListService
+
+    @Before
+    fun setup(){
+        catListService = mockk()
+        observer = mockk()
+        //catListService.getCat().observeForever(observer)
+    }
+
+    @Test
+    fun did_get_cat (){
+        catListService.setCat(mockk())
+        verify { (observer.onChanged(Cat(mockk(),mockk(),mockk()))) }
+    }
+}
+
+

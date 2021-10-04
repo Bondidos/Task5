@@ -66,8 +66,9 @@ dependencies {
     // test
     implementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    // spek
 
+    // spek
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
 
     // MockK
     testImplementation("io.mockk:mockk:1.12.0")

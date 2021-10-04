@@ -24,12 +24,12 @@ fun downloadAndSave(context: Context, cat: Cat) {
     CoroutineScope(Dispatchers.IO).launch {
 
         val dirPath =
-            Environment.DIRECTORY_DCIM + "/savedCats" // path to directory with saved images
+            Environment.DIRECTORY_DCIM + "/savedCats"       // path to directory with saved images
         val mime =
-            "image/*" // Mime type of the content
-        // name of the saved image
+            "image/*"                                       // Mime type of the content
+                                                            // name of the saved image
         val fileName = cat.url.substring(cat.url.lastIndexOf('/') + 1)
-        // type of the image .gif or .jpg from Uri
+                                                            // type of the image .gif or .jpg from Uri
         val fileType = cat.url.substring(cat.url.lastIndexOf('.') + 1)
 
         val values = ContentValues().apply { // describe image
@@ -39,7 +39,7 @@ fun downloadAndSave(context: Context, cat: Cat) {
         }
 
         val resolver =
-            context.contentResolver // provides app. access to content model
+            context.contentResolver                         // provides app. access to content model
 
         if (fileType == "gif") downloadGif(context, cat.url, resolver, values)
         else downloadImage(context, cat.url, resolver, values)
