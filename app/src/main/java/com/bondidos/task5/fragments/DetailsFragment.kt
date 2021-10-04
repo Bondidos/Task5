@@ -68,15 +68,6 @@ class DetailsFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             downloadAndSave(requireNotNull(context), requireNotNull(cat))
         }
-        // todo share image
-        binding.btnShare.setOnClickListener {
-            val shareIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_STREAM, cat?.url)
-                type = "image/*"
-            } // resources.getText(R.string.send_to)
-            startActivity(Intent.createChooser(shareIntent, "Share Cat"))
-        }
     }
 
     override fun onDestroy() {

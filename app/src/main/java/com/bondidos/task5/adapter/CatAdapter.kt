@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.api.Cat
 import com.bondidos.task5.databinding.CatItemBinding
 
-const val TAG = "CatAdapter"
-
 class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
 
     var cats = emptyList<Cat>()
@@ -18,6 +16,7 @@ class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
         }
 
     val catForDetails: MutableLiveData<Cat> = MutableLiveData()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
 
         return CatViewHolder(

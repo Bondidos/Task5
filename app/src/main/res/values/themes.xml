@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Task5" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#5E6472</item>
-        <item name="colorPrimaryVariant">#AED9E0</item>
+        <item name="colorPrimary">#AED9E0</item>
+        <item name="colorPrimaryVariant">#5E6472</item>
         <item name="colorOnPrimary">#B8F2E6</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#FAF3DD</item>

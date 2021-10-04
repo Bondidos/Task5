@@ -14,7 +14,6 @@ android {
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -28,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(1.8)
-        targetCompatibility(1.8)
+        sourceCompatibility(11)
+        targetCompatibility(11)
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         viewBinding = true
@@ -54,8 +53,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.moshi:moshi:1.12.0")
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("junit:junit:4.12")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
 
     // ViewModel
@@ -67,8 +64,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     // test
+    implementation ("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
 
     // MockK
     testImplementation("io.mockk:mockk:1.12.0")
-    // detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.18.1")
 }
