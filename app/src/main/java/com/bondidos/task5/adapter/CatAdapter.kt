@@ -1,24 +1,23 @@
 package com.bondidos.task5.adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
-
-import com.bondidos.task5.model.Cat
+import androidx.recyclerview.widget.RecyclerView
+import com.bondidos.task5.api.Cat
 import com.bondidos.task5.databinding.CatItemBinding
 
-const val TAG="CatAdapter"
-class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
+const val TAG = "CatAdapter"
+
+class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
 
     var cats = emptyList<Cat>()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     val catForDetails: MutableLiveData<Cat> = MutableLiveData()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
 
         return CatViewHolder(
@@ -29,6 +28,7 @@ class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
             )
         )
     }
+
     override fun getItemCount(): Int {
         return cats.size
     }
@@ -36,7 +36,7 @@ class CatAdapter: RecyclerView.Adapter<CatViewHolder>() {
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
         val pictureUrl = cats[position].url
         holder.onBind(pictureUrl)
-            //onClick open details
+        // onClick open details
         holder.itemView.setOnClickListener {
             catForDetails.value = cats[position]
         }

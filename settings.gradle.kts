@@ -3,7 +3,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+       // maven ("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
     }
 }
 rootProject.name = "Task5"

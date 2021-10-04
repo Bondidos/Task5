@@ -1,4 +1,4 @@
-package com.bondidos.task5.model
+package com.bondidos.task5.api
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -8,7 +8,7 @@ data class Cat(
     @Json(name = "id") val id: String,
     @Json(name = "url") val url: String,
     @Json(name = "breeds") val breeds: List<Breeds>
-    )
+)
 
 @JsonClass(generateAdapter = true)
 data class Breeds(

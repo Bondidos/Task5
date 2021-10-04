@@ -1,11 +1,12 @@
 plugins {
-    id ("com.android.application")
-    id ("kotlin-android")
-    id ("kotlin-kapt")
+        id("com.android.application")
+        kotlin("android")
+        kotlin("kapt")
 }
 
 android {
     compileSdk = 31
+    buildToolsVersion = "31.0.0"
 
     defaultConfig {
         applicationId = "com.bondidos.task5"
@@ -19,13 +20,16 @@ android {
 
     buildTypes {
         release {
-            "minifyEnabled" to false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        "sourceCompatibility" to 1.8
-        "targetCompatibility" to 1.8
+        sourceCompatibility(1.8)
+        targetCompatibility(1.8)
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -37,31 +41,34 @@ android {
 
 dependencies {
 
-    implementation ("androidx.core:core-ktx:1.6.0")
-    implementation ("androidx.appcompat:appcompat:1.3.1")
-    implementation ("androidx.fragment:fragment-ktx:1.3.6")
-    implementation ("com.google.android.material:material:1.4.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.1")
-    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
-    //internet. Retrofit+Moshi
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation ("com.squareup.moshi:moshi:1.12.0")
-    kapt ("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
+    // internet. Retrofit+Moshi
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("junit:junit:4.12")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.12.0")
 
-    //ViewModel
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation ("androidx.activity:activity-ktx:1.3.1")
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation("androidx.activity:activity-ktx:1.3.1")
 
-    //Glide
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 
-    //test
+    // test
 
-    //MockK
-    testImplementation ("io.mockk:mockk:1.12.0")
+    // MockK
+    testImplementation("io.mockk:mockk:1.12.0")
+    // detekt("io.gitlab.arturbosch.detekt:detekt-cli:1.18.1")
 }

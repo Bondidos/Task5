@@ -1,7 +1,5 @@
 package com.bondidos.task5.api
 
-import com.bondidos.task5.model.Cat
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -10,12 +8,13 @@ const val QUERY = "/v1/images/search?"
 const val LIMIT = "limit=10"
 const val PAGE = "page=0"
 const val ORDER = "order=DESC"
+
 interface CatApi {
-//"$QUERY?$LIMIT&${PAGE}&$ORDER"
-   // @Headers(KEY_HEADER)
-    @GET(QUERY+ ORDER)
+    // "$QUERY?$LIMIT&${PAGE}&$ORDER"
+    // @Headers(KEY_HEADER)
+    @GET(QUERY + ORDER)
     suspend fun getListCats(
-    @Query("limit") n: Int,
-    @Query("page") p: Int
-): List<Cat>
+        @Query("limit") n: Int,
+        @Query("page") p: Int
+    ): List<Cat>
 }
