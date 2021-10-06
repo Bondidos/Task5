@@ -11,18 +11,13 @@ import kotlinx.coroutines.launch
 private const val limit = 10
 
 class CatListService : ViewModel() {
-    private var page = 0
-
-    var firstVisibleItem = 0
-
+    private var page = 0                                    // start page
+    var firstVisibleItem = 0                                // first visible item of RV. Using to remember scroll position
+//-------------------------------remove
     private val catToDetailsFragment: MutableLiveData<Cat> = MutableLiveData()
-
-    fun setCat(cat: Cat) {
-        catToDetailsFragment.value = cat
-    }
-
+    fun setCat(cat: Cat) = apply {catToDetailsFragment.value = cat}
     fun getCat() = catToDetailsFragment.value
-
+//--------------------------
     private val _cats = MutableLiveData<List<Cat>>()
     val cats: LiveData<List<Cat>>
         get() = _cats

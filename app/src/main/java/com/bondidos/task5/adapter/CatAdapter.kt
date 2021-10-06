@@ -1,5 +1,6 @@
 package com.bondidos.task5.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import com.bondidos.task5.databinding.CatItemBinding
 class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
 
     var cats = emptyList<Cat>()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -36,6 +38,7 @@ class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
         val pictureUrl = cats[position].url
         holder.onBind(pictureUrl)
         // onClick open details
+        /**this*/
         holder.itemView.setOnClickListener {
             catForDetails.value = cats[position]
         }

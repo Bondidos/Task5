@@ -76,11 +76,11 @@ private fun downloadGif(
         .get()
 
     val buffer =
-        gifImage.buffer // GifDrawable as ByteBuffer
+        gifImage.buffer                                 // GifDrawable as ByteBuffer
     val bytes =
-        ByteArray(buffer.capacity()) // create ByteArray with size = buffer.size
+        ByteArray(buffer.capacity())                    // create ByteArray with size = buffer.size
     (buffer.duplicate()
-        .clear() as ByteBuffer).get(bytes) // duplicate buffer and copy into bytes
+        .clear() as ByteBuffer).get(bytes)              // duplicate buffer and copy into bytes
 
     saveImage(context, resolver, values, null, bytes)
 }
@@ -100,7 +100,7 @@ private fun saveImage(
             ?: throw IOException("failed to create new MediaStore record.")
 
         when {
-            bitmap != null && gif == null -> // if bitmap
+            bitmap != null && gif == null ->                    // if bitmap
 
                 resolver.openOutputStream(uri)?.use {
                     if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)) {
@@ -108,7 +108,7 @@ private fun saveImage(
                     } else showToast("Image saved.", context)
                 } ?: throw IOException("Failed to open output stream.")
 
-            bitmap == null && gif != null -> // if gif
+            bitmap == null && gif != null ->                    // if gif
 
                 resolver.openOutputStream(uri)?.use {
                     it.write(gif, 0, gif.size)

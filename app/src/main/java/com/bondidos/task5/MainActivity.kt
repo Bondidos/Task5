@@ -1,16 +1,13 @@
 package com.bondidos.task5
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.bondidos.task5.databinding.ActivityMainBinding
 import com.bondidos.task5.fragments.CatListFragment
 import com.bondidos.task5.fragments.DetailsFragment
 import com.bondidos.task5.fragments.FragmentNavigation
 
-private const val setNaviIcon = "naviIcon"
+private const val NAVIGATION_ICON = "naviIcon"
 
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
@@ -19,7 +16,6 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         // toolbar
         binding.toolbarActionbar.setNavigationOnClickListener {
@@ -29,7 +25,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
         // show icon
         if (savedInstanceState != null) {
-            val showIcon = savedInstanceState.getBoolean(setNaviIcon)
+            val showIcon = savedInstanceState.getBoolean(NAVIGATION_ICON)
             if (showIcon) {
                 binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
                 isShowNavigationIcon = true
@@ -38,37 +34,33 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     }
 
     override fun navigateListFragment() {
-
         binding.toolbarActionbar.navigationIcon = null
         isShowNavigationIcon = false
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(
-                R.anim.flip_in,
-                R.anim.flip_out
+                R.animator.flip_in,
+                R.animator.flip_out
             )
             .replace(binding.Container.id, CatListFragment.newInstance())
             .commit()
-
     }
 
     override fun navigateDetailsFragment() {
-
         binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         isShowNavigationIcon = true
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(
-                R.anim.flip_in,
-                R.anim.flip_out
+                R.animator.flip_in,
+                R.animator.flip_out
             )
             .replace(binding.Container.id, DetailsFragment.newInstance())
             .commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(setNaviIcon, isShowNavigationIcon)
+        outState.putBoolean(NAVIGATION_ICON, isShowNavigationIcon)
         super.onSaveInstanceState(outState)
     }
-
 }

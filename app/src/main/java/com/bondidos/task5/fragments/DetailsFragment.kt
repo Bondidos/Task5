@@ -19,9 +19,10 @@ class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val catListService: CatListService by activityViewModels()
+    private val catListService: CatListService by activityViewModels() /***this*/
     private var navigation: FragmentNavigation? = null
-    private val cat: Cat? get() = catListService.getCat()
+    private val cat: Cat? get() = catListService.getCat()    /***this*/
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -33,7 +34,6 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -56,7 +56,7 @@ class DetailsFragment : Fragment() {
 
             // load Description
             description.text = cat?.breeds?.let {
-                if (!it.isEmpty()) {
+                if (it.isNotEmpty()) {
                     it[0].description
                 } else "No Description"
             }.toString()
@@ -64,8 +64,13 @@ class DetailsFragment : Fragment() {
     }
 
     private fun initButton() {
+        /***this needs refactor*/
         binding.btnSave.setOnClickListener {
-            downloadAndSave(requireNotNull(context), requireNotNull(cat))
+            try {
+                downloadAndSave(requireNotNull(context), requireNotNull(cat))
+            } catch (e: Exception) {
+                e.stackTrace
+            }
         }
     }
 
@@ -75,7 +80,6 @@ class DetailsFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = DetailsFragment()
     }

@@ -38,7 +38,7 @@ class CatListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // receive list for recycler from viewModel
+
         initRecyclerView()
         initObserver()
     }
@@ -48,11 +48,10 @@ class CatListFragment : Fragment() {
         with(binding) {
             recycler.apply {
                 layoutManager = GridLayoutManager(root.context, 2)
-                // LinearLayoutManager(root.context)
                 adapter = catAdapter
-                // pagination
                 addOnScrollListener(object :
                     PaginationScrollListener(layoutManager as GridLayoutManager) {
+
                     override fun loadNextPage() {
                         catListService.getNextPage()
                     }
@@ -72,7 +71,7 @@ class CatListFragment : Fragment() {
                 catAdapter.cats = it
             }
         }
-
+        /***this**/
         catAdapter.catForDetails.observe(viewLifecycleOwner) { cat ->
             catListService.setCat(cat)
             navigation?.navigateDetailsFragment()
@@ -80,7 +79,6 @@ class CatListFragment : Fragment() {
     }
 
     override fun onDestroy() {
-        // catListService.removeListener(catListener)
         _binding = null
         super.onDestroy()
     }
