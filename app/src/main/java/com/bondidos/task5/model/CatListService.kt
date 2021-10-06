@@ -22,7 +22,7 @@ class CatListService : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _cats.value = repository.getListCats(LIMIT, page)
+            _cats.value = getPage()
         }
     }
 
@@ -32,9 +32,18 @@ class CatListService : ViewModel() {
             val list = mutableListOf<Cat>()
             list.apply {
                 addAll(_cats.value ?: emptyList())
-                addAll(repository.getListCats(LIMIT, page))
+                addAll(getPage())
             }
             _cats.value = list
         }
+    }
+
+    private suspend fun getPage(): List<Cat>{
+        try {
+            return repository.getListCats(LIMIT, page)
+        } catch (e: Throwable){
+            e.stackTrace
+        }
+        return emptyList()
     }
 }
