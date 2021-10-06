@@ -37,7 +37,6 @@ detekt {
         }
     }
 }
-
 tasks.detekt
 
 tasks.register("clean", Delete::class) {

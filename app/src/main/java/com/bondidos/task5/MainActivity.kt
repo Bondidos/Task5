@@ -7,7 +7,7 @@ import com.bondidos.task5.fragments.CatListFragment
 import com.bondidos.task5.fragments.DetailsFragment
 import com.bondidos.task5.fragments.FragmentNavigation
 
-private const val NAVIGATION_ICON = "naviIcon"
+private const val SHOW_NAVI_ICON = "naviIcon"
 
 class MainActivity : AppCompatActivity(), FragmentNavigation {
 
@@ -24,9 +24,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         setContentView(binding.root)
 
         // show icon
-        if (savedInstanceState != null) {
-            val showIcon = savedInstanceState.getBoolean(NAVIGATION_ICON)
-            if (showIcon) {
+        savedInstanceState?.let {
+            if (savedInstanceState.getBoolean(SHOW_NAVI_ICON)) {
                 binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
                 isShowNavigationIcon = true
             } else binding.toolbarActionbar.navigationIcon = null
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             .commit()
     }
 
-    override fun navigateDetailsFragment() {
+    override fun navigateDetailsFragment(id: String) {
         binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
         isShowNavigationIcon = true
         supportFragmentManager
@@ -55,12 +54,12 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
                 R.animator.flip_in,
                 R.animator.flip_out
             )
-            .replace(binding.Container.id, DetailsFragment.newInstance())
+            .replace(binding.Container.id, DetailsFragment.newInstance(id))
             .commit()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(NAVIGATION_ICON, isShowNavigationIcon)
+        outState.putBoolean(SHOW_NAVI_ICON, isShowNavigationIcon)
         super.onSaveInstanceState(outState)
     }
 }

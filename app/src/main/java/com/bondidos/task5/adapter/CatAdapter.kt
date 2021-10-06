@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.api.Cat
 import com.bondidos.task5.databinding.CatItemBinding
+import com.bondidos.task5.fragments.FragmentNavigation
 
-class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
+class CatAdapter(private val navigation: FragmentNavigation?) : RecyclerView.Adapter<CatViewHolder>() {
 
     var cats = emptyList<Cat>()
         @SuppressLint("NotifyDataSetChanged")
@@ -16,8 +17,6 @@ class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
             field = value
             notifyDataSetChanged()
         }
-
-    val catForDetails: MutableLiveData<Cat> = MutableLiveData()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
 
@@ -37,10 +36,9 @@ class CatAdapter : RecyclerView.Adapter<CatViewHolder>() {
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
         val pictureUrl = cats[position].url
         holder.onBind(pictureUrl)
-        // onClick open details
-        /**this*/
+
         holder.itemView.setOnClickListener {
-            catForDetails.value = cats[position]
+            navigation?.navigateDetailsFragment(id = cats[position].id)
         }
     }
 }

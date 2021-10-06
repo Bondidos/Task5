@@ -17,8 +17,6 @@ class App : Application() {
 
     private val catNetworkService = retrofit.create(CatApi::class.java)
 
-    // todo add check for response code
-    //TODO : TRY CATCH FINALLY??? LOOK ASSASINUS EXAMPLE
     suspend fun getListCats(limit: Int, page: Int): List<Cat> {
         return withContext(Dispatchers.IO) {
             catNetworkService.getListCats(limit, page)

@@ -19,12 +19,13 @@ class CatListFragment : Fragment() {
     private var _binding: FragmentCatsListBinding? = null
     private val binding get() = requireNotNull(_binding)
     private var navigation: FragmentNavigation? = null
-    private var catAdapter = CatAdapter()
+    private lateinit var catAdapter: CatAdapter
     private val catListService: CatListService by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         navigation = context as MainActivity
+        catAdapter = CatAdapter(navigation)
     }
 
     override fun onCreateView(
@@ -71,11 +72,6 @@ class CatListFragment : Fragment() {
                 catAdapter.cats = it
             }
         }
-        /***this**/
-        catAdapter.catForDetails.observe(viewLifecycleOwner) { cat ->
-            catListService.setCat(cat)
-            navigation?.navigateDetailsFragment()
-        }
     }
 
     override fun onDestroy() {
@@ -84,7 +80,6 @@ class CatListFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = CatListFragment()
     }

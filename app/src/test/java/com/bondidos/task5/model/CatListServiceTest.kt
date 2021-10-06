@@ -24,13 +24,6 @@ class CatListServiceTest{
     fun setup(){
         catListService = mockk()
         observer = mockk()
-        //catListService.getCat().observeForever(observer)
-    }
-
-    @Test
-    fun did_get_cat (){
-        catListService.setCat(mockk())
-        verify { (observer.onChanged(Cat(mockk(),mockk(),mockk()))) }
     }
 }
 

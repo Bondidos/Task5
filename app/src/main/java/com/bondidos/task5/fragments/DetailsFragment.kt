@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bondidos.task5.MainActivity
@@ -15,13 +16,16 @@ import com.bondidos.task5.model.CatListService
 import com.bondidos.task5.utils.downloadAndSave
 import com.bumptech.glide.Glide
 
+private const val CAT_ID = "catId"
+private const val DEFAULT_DESCRIPTION = "No description"
+
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val catListService: CatListService by activityViewModels() /***this*/
+    private val catListService: CatListService by activityViewModels()
     private var navigation: FragmentNavigation? = null
-    private val cat: Cat? get() = catListService.getCat()    /***this*/
+    private var catId: String? = null
 
 
     override fun onAttach(context: Context) {
@@ -34,44 +38,55 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // get cat id
+        arguments?.let { catId = it.getString(CAT_ID) }
+
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setImageAndText()
-        initButton()
+        val cat = findCatById()
+        cat?.let {
+            setImageAndText(cat)
+            initButton(cat)
+        }
     }
 
-    private fun setImageAndText() {
+    private fun setImageAndText(cat: Cat) {
 
         with(binding) {
             // load image
             Glide.with(catView)
-                .load(cat?.url)
+                .load(cat.url)
                 .placeholder(R.drawable.ic_baseline_360_24)
                 .error(R.drawable.ic_baseline_error_24)
                 .into(catView)
 
             // load Description
-            description.text = cat?.breeds?.let {
+            description.text = cat.breeds.let {
                 if (it.isNotEmpty()) {
                     it[0].description
-                } else "No Description"
+                } else DEFAULT_DESCRIPTION
             }.toString()
         }
     }
 
-    private fun initButton() {
-        /***this needs refactor*/
+    private fun initButton(cat: Cat) {
+
         binding.btnSave.setOnClickListener {
             try {
-                downloadAndSave(requireNotNull(context), requireNotNull(cat))
-            } catch (e: Exception) {
+                downloadAndSave(requireContext(), cat)
+            } catch (e: IllegalStateException ) {
                 e.stackTrace
             }
         }
+    }
+
+    private fun findCatById(): Cat? {
+        val catList = catListService.cats.value ?: emptyList()
+        return catList.find { it.id == catId }
     }
 
     override fun onDestroy() {
@@ -81,6 +96,8 @@ class DetailsFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = DetailsFragment()
+        fun newInstance(id: String) = DetailsFragment().apply {
+            arguments = bundleOf(Pair(CAT_ID, id))
+        }
     }
 }
