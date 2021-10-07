@@ -7,6 +7,7 @@
         android:valueTo="0.0" />
 
     <objectAnimator
+        android:interpolator="@android:interpolator/accelerate_decelerate"
         android:duration="1500"
         android:propertyName="rotationY"
         android:repeatMode="reverse"

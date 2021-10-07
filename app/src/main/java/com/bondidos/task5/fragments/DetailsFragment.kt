@@ -67,7 +67,7 @@ class DetailsFragment : Fragment() {
             // load Description
             description.text = cat.breeds.let {
                 if (it.isNotEmpty()) {
-                    it[0].description
+                    it.first().description
                 } else DEFAULT_DESCRIPTION
             }.toString()
         }
