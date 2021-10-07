@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.bondidos.task5.api.Repository
 import com.bondidos.task5.api.Cat
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
