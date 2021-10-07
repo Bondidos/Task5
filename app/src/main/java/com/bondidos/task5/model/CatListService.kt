@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bondidos.task5.api.App
+import com.bondidos.task5.api.Repository
 import com.bondidos.task5.api.Cat
 import kotlinx.coroutines.launch
 
 private const val LIMIT = 10
 
-class CatListService : ViewModel() {
+class CatListService(private val repository:Repository) : ViewModel() {
 
-    private val repository get() = App()                    // call ethernet ;)
+   // private val repository get() = App()                    // call ethernet ;)
     private var page = 0                                    // start page
     var firstVisibleItem = 0                                // first visible item of RV. Using to remember scroll position
 

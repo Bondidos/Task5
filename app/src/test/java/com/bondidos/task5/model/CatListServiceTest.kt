@@ -1,25 +1,18 @@
 package com.bondidos.task5.model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import com.bondidos.task5.api.Repository
 import com.bondidos.task5.api.Cat
-import com.bondidos.task5.fragments.CatListFragment
 import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.impl.stub.StubRepository
-import io.mockk.isMockKMock
+import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -37,13 +30,17 @@ class CatListServiceTest{
     private lateinit var catListService: CatListService
     @ExperimentalCoroutinesApi
     private val coroutineDispatcher = TestCoroutineDispatcher()
-    private var recievedList = listOf<Cat>(mockk())
+    @ExperimentalCoroutinesApi
+    private val testCoroutineScope = TestCoroutineScope(coroutineDispatcher)
+    private lateinit var repository: Repository
+    private var result = listOf<Cat>(mockk(),mockk())
 
     @ExperimentalCoroutinesApi
     @Before
     fun setup(){
         Dispatchers.setMain(coroutineDispatcher)
-        catListService = CatListService()
+        repository = mockk()
+        catListService = CatListService(repository)
         observer = mockk(relaxed = true)
         catListService.cats.observeForever(observer)
     }
@@ -55,12 +52,20 @@ class CatListServiceTest{
     }
 
     @Test
-    fun test_init_block(){
+    fun get_next_page_calls_observer_onChange(){
         catListService.getNextPage()
-        //every { observer.onChanged (Result.success(List<Cat>)) }
+        verify { observer.onChanged(any()) }
     }
+
+    @ExperimentalCoroutinesApi
     @Test
-    fun get_next_page(){
+    fun repository_pass_data_to_the_Observer(){
+
+        testCoroutineScope.launch {
+            coEvery{ repository.getListCats(any(),any())} returns result
+        }
+        catListService.getNextPage()
+        verify { observer.onChanged(result) }
 
     }
 }

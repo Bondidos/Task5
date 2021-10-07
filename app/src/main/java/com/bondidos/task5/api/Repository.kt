@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val BASE_URL = "https://api.thecatapi.com"
 
-class App : Application() {
+class Repository : Application() {
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())

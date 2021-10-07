@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bondidos.task5.MainActivity
 import com.bondidos.task5.adapter.CatAdapter
 import com.bondidos.task5.adapter.pagination.PaginationScrollListener
+import com.bondidos.task5.api.Repository
 import com.bondidos.task5.databinding.FragmentCatsListBinding
 import com.bondidos.task5.model.CatListService
+import com.bondidos.task5.model.CatListServiceFactory
 
 class CatListFragment : Fragment() {
 
@@ -20,7 +22,9 @@ class CatListFragment : Fragment() {
     private val binding get() = requireNotNull(_binding)
     private var navigation: FragmentNavigation? = null
     private lateinit var catAdapter: CatAdapter
-    private val catListService: CatListService by activityViewModels()
+    private val catListService: CatListService by activityViewModels {
+        CatListServiceFactory(Repository())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
