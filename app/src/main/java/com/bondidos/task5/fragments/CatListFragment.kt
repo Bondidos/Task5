@@ -46,6 +46,7 @@ class CatListFragment : Fragment() {
 
         initRecyclerView()
         initObserver()
+        initSwipeRefresh()
     }
 
     private fun initRecyclerView() {
@@ -70,10 +71,22 @@ class CatListFragment : Fragment() {
         }
     }
 
+    private fun initSwipeRefresh() {
+
+        binding.refreshLayout.setOnRefreshListener {
+            catListService.cats.value?.let { list ->
+                if (list.isEmpty()) catListService.refresh()
+                else  binding.refreshLayout.isRefreshing = false
+            }
+        }
+
+    }
+
     private fun initObserver() {
         catListService.cats.observe(viewLifecycleOwner) { list ->
             list.let {
                 catAdapter.cats = it
+                binding.refreshLayout.isRefreshing = false
             }
         }
     }

@@ -46,4 +46,10 @@ class CatListService(private val repository: Repository) : ViewModel() {
             emptyList()
         }
     }
+
+    fun refresh(){
+        viewModelScope.launch {
+            _cats.value = getPage()
+        }
+    }
 }
