@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bondidos.task5.databinding.ActivityMainBinding
 import com.bondidos.task5.fragments.CatListFragment
 import com.bondidos.task5.fragments.DetailsFragment
+import com.bondidos.task5.fragments.ExitDialog
 import com.bondidos.task5.fragments.FragmentNavigation
 
 private const val SHOW_NAVI_ICON = "naviIcon"
@@ -58,8 +59,17 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
             .commit()
     }
 
+    override fun finish() {
+        super.finish()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean(SHOW_NAVI_ICON, isShowNavigationIcon)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onBackPressed() {
+        val dialog = ExitDialog()
+        dialog.show(supportFragmentManager, "Exit?")
     }
 }
