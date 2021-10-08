@@ -46,33 +46,35 @@ class DownloadAndSaveImage(private val context: Context, private val cat: Cat) {
     fun downloadAndSave() {
 
         CoroutineScope(Dispatchers.IO).launch {
+            try {
+                when (fileType) {
+                    "gif" -> {
+                        val gifImage = Glide.with(context)
+                            .asGif()
+                            .load(cat.url)
+                            .submit()
+                            .get()
+                        // GifDrawable as ByteBuffer
+                        val buffer = gifImage.buffer
+                        // create ByteArray with size = buffer.size
+                        val bytes = ByteArray(buffer.capacity())
+                        // duplicate buffer and copy into bytes
+                        (buffer.duplicate().clear() as ByteBuffer).get(bytes)
 
-            when (fileType) {
-                "gif" -> {
-                    val gifImage = Glide.with(context)
-                        .asGif()
-                        .load(cat.url)
-                        .submit()
-                        .get()
+                        saveImage(null, bytes)
+                    }
+                    else -> {
+                        val bitmap = Glide.with(context)
+                            .asBitmap()
+                            .load(cat.url)
+                            .submit()
+                            .get()
 
-                    // GifDrawable as ByteBuffer
-                    val buffer = gifImage.buffer
-                    // create ByteArray with size = buffer.size
-                    val bytes = ByteArray(buffer.capacity())
-                    // duplicate buffer and copy into bytes
-                    (buffer.duplicate().clear() as ByteBuffer).get(bytes)
-
-                    saveImage(null, bytes)
+                        saveImage(bitmap, null)
+                    }
                 }
-                else -> {
-                    val bitmap = Glide.with(context)
-                        .asBitmap()
-                        .load(cat.url)
-                        .submit()
-                        .get()
-
-                    saveImage(bitmap, null)
-                }
+            } catch (e: Exception) {
+                showToast("Can't load image. Check Internet connection", context)
             }
         }
     }

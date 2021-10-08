@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.bondidos.task5.model.CatListServiceFactory
 import com.bondidos.task5.R
 import com.bondidos.task5.utils.DownloadAndSaveImage
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
 
 private const val CAT_ID = "catId"
 private const val DEFAULT_DESCRIPTION = "No description"
@@ -81,8 +83,8 @@ class DetailsFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             try {
                 DownloadAndSaveImage(requireContext(),cat).downloadAndSave()
-            } catch (e: IllegalStateException) {
-                e.stackTrace
+            } catch (e: GlideException) {
+                Toast.makeText(requireContext(),"No Internet Connection", Toast.LENGTH_LONG).show()
             }
         }
     }
