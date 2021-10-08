@@ -6,7 +6,7 @@ import com.bondidos.task5.databinding.CatItemBinding
 import com.bumptech.glide.Glide
 
 class CatViewHolder(binding: CatItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    val imageView = binding.catView
+    private val imageView = binding.catView
 
     fun onBind(pictureUrl: String) {
 
