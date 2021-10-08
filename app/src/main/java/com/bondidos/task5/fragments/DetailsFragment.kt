@@ -15,7 +15,7 @@ import com.bondidos.task5.MainActivity
 import com.bondidos.task5.model.CatListService
 import com.bondidos.task5.model.CatListServiceFactory
 import com.bondidos.task5.R
-import com.bondidos.task5.utils.downloadAndSave
+import com.bondidos.task5.utils.DownloadAndSaveImage
 import com.bumptech.glide.Glide
 
 private const val CAT_ID = "catId"
@@ -80,7 +80,7 @@ class DetailsFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             try {
-                downloadAndSave(requireContext(), cat)
+                DownloadAndSaveImage(requireContext(),cat).downloadAndSave()
             } catch (e: IllegalStateException) {
                 e.stackTrace
             }

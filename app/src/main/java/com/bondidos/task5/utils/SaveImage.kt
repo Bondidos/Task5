@@ -20,108 +20,111 @@ import kotlinx.coroutines.launch
 
 private const val QUALITY = 100
 
-fun downloadAndSave(context: Context, cat: Cat) {
+class DownloadAndSaveImage(private val context: Context, private val cat: Cat) {
 
-    CoroutineScope(Dispatchers.IO).launch {
+    fun downloadAndSave() {
 
-        // path to directory with saved images
-        val dirPath = Environment.DIRECTORY_DCIM + "/savedCats"
-        // Mime type of the content
-        val mime = "image/*"
-        // name of the saved image
-        val fileName = cat.url.substring(cat.url.lastIndexOf('/') + 1)
-        // type of the image .gif or .jpg from Uri
-        val fileType = cat.url.substring(cat.url.lastIndexOf('.') + 1)
+        CoroutineScope(Dispatchers.IO).launch {
 
-        val values = ContentValues().apply { // describe image
-            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-            put(MediaStore.MediaColumns.MIME_TYPE, mime)
-            put(MediaStore.MediaColumns.RELATIVE_PATH, dirPath)
+            // path to directory with saved images
+            val dirPath = Environment.DIRECTORY_DCIM + "/savedCats"
+            // Mime type of the content
+            val mime = "image/*"
+            // name of the saved image
+            val fileName = cat.url.substring(cat.url.lastIndexOf('/') + 1)
+            // type of the image .gif or .jpg from Uri
+            val fileType = cat.url.substring(cat.url.lastIndexOf('.') + 1)
+
+            val values = ContentValues().apply { // describe image
+                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                put(MediaStore.MediaColumns.MIME_TYPE, mime)
+                put(MediaStore.MediaColumns.RELATIVE_PATH, dirPath)
+            }
+
+            // provides app. access to content model
+            val resolver = context.contentResolver
+
+            if (fileType == "gif") downloadGif(context, cat.url, resolver, values)
+            else downloadImage(context, cat.url, resolver, values)
         }
-
-        // provides app. access to content model
-        val resolver = context.contentResolver
-
-        if (fileType == "gif") downloadGif(context, cat.url, resolver, values)
-        else downloadImage(context, cat.url, resolver, values)
     }
-}
 
-private fun downloadImage(
-    context: Context,
-    uri: String,
-    resolver: ContentResolver,
-    values: ContentValues
-) {
-    // download as Bitmap
-    val bitmap = Glide.with(context)
-        .asBitmap()
-        .load(uri)
-        .submit()
-        .get()
+    private fun downloadImage(
+        context: Context,
+        uri: String,
+        resolver: ContentResolver,
+        values: ContentValues
+    ) {
+        // download as Bitmap
+        val bitmap = Glide.with(context)
+            .asBitmap()
+            .load(uri)
+            .submit()
+            .get()
 
-    saveImage(context, resolver, values, bitmap, null)
-}
+        saveImage(context, resolver, values, bitmap, null)
+    }
 
-private fun downloadGif(
-    context: Context,
-    uri: String,
-    resolver: ContentResolver,
-    values: ContentValues
-) {
-    // download as GifDrawable
-    val gifImage = Glide.with(context)
-        .asGif()
-        .load(uri)
-        .submit()
-        .get()
+    private fun downloadGif(
+        context: Context,
+        uri: String,
+        resolver: ContentResolver,
+        values: ContentValues
+    ) {
+        // download as GifDrawable
+        val gifImage = Glide.with(context)
+            .asGif()
+            .load(uri)
+            .submit()
+            .get()
 
-    // GifDrawable as ByteBuffer
-    val buffer = gifImage.buffer
-    // create ByteArray with size = buffer.size
-    val bytes = ByteArray(buffer.capacity())
-    // duplicate buffer and copy into bytes
-    (buffer.duplicate().clear() as ByteBuffer).get(bytes)
+        // GifDrawable as ByteBuffer
+        val buffer = gifImage.buffer
+        // create ByteArray with size = buffer.size
+        val bytes = ByteArray(buffer.capacity())
+        // duplicate buffer and copy into bytes
+        (buffer.duplicate().clear() as ByteBuffer).get(bytes)
 
-    saveImage(context, resolver, values, null, bytes)
-}
+        saveImage(context, resolver, values, null, bytes)
+    }
 
-private fun saveImage(
-    context: Context,
-    resolver: ContentResolver,
-    values: ContentValues,
-    bitmap: Bitmap?,
-    gif: ByteArray?
-) {
+    private fun saveImage(
+        context: Context,
+        resolver: ContentResolver,
+        values: ContentValues,
+        bitmap: Bitmap?,
+        gif: ByteArray?
+    ) {
 
-    var uri: Uri? = null
+        var uri: Uri? = null
 
-    try {
-        uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            ?: throw IOException("failed to create new MediaStore record.")
+        try {
+            uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                ?: throw IOException("failed to create new MediaStore record.")
 
-        when {
-            // if bitmap
-            bitmap != null && gif == null ->
+            when {
+                // if bitmap
+                bitmap != null && gif == null ->
 
-                resolver.openOutputStream(uri)?.use {
-                    if (!bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, it)) {
-                        showToast("Failed to save Image...", context)
-                    } else showToast("Image saved.", context)
-                } ?: throw IOException("Failed to open output stream.")
-            // if gif
-            bitmap == null && gif != null ->
+                    resolver.openOutputStream(uri)?.use {
+                        if (!bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, it)) {
+                            showToast("Failed to save Image...", context)
+                        } else showToast("Image saved.", context)
+                    } ?: throw IOException("Failed to open output stream.")
+                // if gif
+                bitmap == null && gif != null ->
 
-                resolver.openOutputStream(uri)?.use {
-                    it.write(gif, 0, gif.size)
-                    showToast("Image saved to DCIM/savedCats", context)
-                } ?: throw IOException("Failed to open output stream.")
+                    resolver.openOutputStream(uri)?.use {
+                        it.write(gif, 0, gif.size)
+                        showToast("Image saved to DCIM/savedCats", context)
+                    } ?: throw IOException("Failed to open output stream.")
+            }
+        } catch (e: IOException) {
+            uri?.let { Uri ->
+                resolver.delete(Uri, null, null)
+            }
+            throw e
         }
-    } catch (e: IOException) {
-        uri?.let { Uri ->
-            resolver.delete(Uri, null, null)
-        }
-        throw e
     }
 }
 
