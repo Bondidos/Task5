@@ -40,11 +40,10 @@ class CatListService(private val repository: Repository) : ViewModel() {
     }
 
     private suspend fun getPage(): List<Cat> {
-        try {
-            return repository.getListCats(LIMIT, page)
+        return try {
+            repository.getListCats(LIMIT, page)
         } catch (e: Throwable) {
-            e.stackTrace
+            emptyList()
         }
-        return emptyList()
     }
 }
