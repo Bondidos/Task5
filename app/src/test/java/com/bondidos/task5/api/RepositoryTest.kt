@@ -25,12 +25,13 @@ class RepositoryTest {
 
     private lateinit var observer: Observer<List<Cat>>
     private lateinit var catListService: CatListService
+
     @ExperimentalCoroutinesApi
     private val coroutineDispatcher = TestCoroutineDispatcher()
+
     @ExperimentalCoroutinesApi
     private val testCoroutineScope = TestCoroutineScope(coroutineDispatcher)
     private lateinit var repository: Repository
-
 
     @ExperimentalCoroutinesApi
     @Before
@@ -54,7 +55,8 @@ class RepositoryTest {
         testCoroutineScope.launch {
             (1..5).forEach {
                 catListService.getNextPage()
-                delay(100)                              // wait list from repo
+                // wait list from repo
+                delay(100)
                 verify {
                     observer.onChanged(match { list ->
                         list.size == it * 10

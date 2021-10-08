@@ -2,8 +2,8 @@ package com.bondidos.task5.model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.bondidos.task5.api.Repository
 import com.bondidos.task5.api.Cat
+import com.bondidos.task5.api.Repository
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
@@ -17,24 +17,25 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
-class CatListServiceTest{
+class CatListServiceTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     private lateinit var observer: Observer<List<Cat>>
     private lateinit var catListService: CatListService
+
     @ExperimentalCoroutinesApi
     private val coroutineDispatcher = TestCoroutineDispatcher()
+
     @ExperimentalCoroutinesApi
     private val testCoroutineScope = TestCoroutineScope(coroutineDispatcher)
     private lateinit var repository: Repository
-    private var result = listOf<Cat>(mockk(),mockk())
+    private var result = listOf<Cat>(mockk(), mockk())
 
     @ExperimentalCoroutinesApi
     @Before
-    fun setup(){
+    fun setup() {
         Dispatchers.setMain(coroutineDispatcher)
         repository = mockk()
         catListService = CatListService(repository)
@@ -43,22 +44,22 @@ class CatListServiceTest{
     }
 
     @Test
-    fun get_next_page_calls_observer_onChange(){
+    fun get_next_page_calls_observer_onChange() {
         catListService.getNextPage()
         verify { observer.onChanged(any()) }
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun repository_pass_data_to_the_Observer(){
+    fun repository_pass_data_to_the_Observer() {
         testCoroutineScope.launch {
-            coEvery{ repository.getListCats(any(),any())} returns result
+            coEvery { repository.getListCats(any(), any()) } returns result
         }
         catListService.getNextPage()
-        verify { observer.onChanged(match { list ->
-            list == result
-        }) }
+        verify {
+            observer.onChanged(match { list ->
+                list == result
+            })
+        }
     }
 }
-
-

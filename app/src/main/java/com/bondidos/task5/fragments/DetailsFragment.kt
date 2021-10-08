@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.bondidos.task5.MainActivity
-import com.bondidos.task5.R
-import com.bondidos.task5.api.Repository
+import androidx.fragment.app.Fragment
 import com.bondidos.task5.api.Cat
+import com.bondidos.task5.api.Repository
 import com.bondidos.task5.databinding.FragmentDetailsBinding
+import com.bondidos.task5.MainActivity
 import com.bondidos.task5.model.CatListService
 import com.bondidos.task5.model.CatListServiceFactory
+import com.bondidos.task5.R
 import com.bondidos.task5.utils.downloadAndSave
 import com.bumptech.glide.Glide
 
@@ -25,12 +25,11 @@ class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = requireNotNull(_binding)
-    private val catListService: CatListService by activityViewModels{
+    private val catListService: CatListService by activityViewModels {
         CatListServiceFactory(Repository())
     }
     private var navigation: FragmentNavigation? = null
     private var catId: String? = null
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -82,7 +81,7 @@ class DetailsFragment : Fragment() {
         binding.btnSave.setOnClickListener {
             try {
                 downloadAndSave(requireContext(), cat)
-            } catch (e: IllegalStateException ) {
+            } catch (e: IllegalStateException) {
                 e.stackTrace
             }
         }

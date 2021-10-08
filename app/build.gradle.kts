@@ -64,11 +64,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     // test
-    implementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
-
-    // spek
+    implementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
 
     // MockK

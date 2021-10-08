@@ -1,13 +1,11 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
-    dependencies{
-        classpath ("com.android.tools.build:gradle:7.0.2")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.0.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
     }
 }
 
@@ -16,7 +14,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
 }
 subprojects {
-    apply (plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
     ktlint {
         debug.set(false)
     }
@@ -37,7 +35,6 @@ detekt {
         }
     }
 }
-tasks.detekt
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

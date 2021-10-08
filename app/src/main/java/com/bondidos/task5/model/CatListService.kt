@@ -10,11 +10,12 @@ import kotlinx.coroutines.launch
 
 private const val LIMIT = 10
 
-class CatListService(private val repository:Repository) : ViewModel() {
+class CatListService(private val repository: Repository) : ViewModel() {
 
-   // private val repository get() = App()                    // call ethernet ;)
-    private var page = 0                                    // start page
-    var firstVisibleItem = 0                                // first visible item of RV. Using to remember scroll position
+    // start page
+    private var page = 0
+    // first visible item of RV. Using to remember scroll position
+    var firstVisibleItem = 0
 
     private val _cats = MutableLiveData<List<Cat>>()
     val cats: LiveData<List<Cat>>
@@ -38,10 +39,10 @@ class CatListService(private val repository:Repository) : ViewModel() {
         }
     }
 
-    private suspend fun getPage(): List<Cat>{
+    private suspend fun getPage(): List<Cat> {
         try {
             return repository.getListCats(LIMIT, page)
-        } catch (e: Throwable){
+        } catch (e: Throwable) {
             e.stackTrace
         }
         return emptyList()

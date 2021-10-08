@@ -3,8 +3,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven ( "https://plugins.gradle.org/m2/")
+        maven("https://plugins.gradle.org/m2/")
     }
 }
 rootProject.name = "Task5"
-include (":app")
+include(":app")

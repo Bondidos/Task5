@@ -3,7 +3,6 @@ package com.bondidos.task5.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bondidos.task5.api.Cat
 import com.bondidos.task5.databinding.CatItemBinding

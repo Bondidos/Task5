@@ -18,18 +18,19 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+private const val QUALITY = 100
+
 fun downloadAndSave(context: Context, cat: Cat) {
-    // todo dialog for save name
 
     CoroutineScope(Dispatchers.IO).launch {
 
-        val dirPath =
-            Environment.DIRECTORY_DCIM + "/savedCats"       // path to directory with saved images
-        val mime =
-            "image/*"                                       // Mime type of the content
-                                                            // name of the saved image
+        // path to directory with saved images
+        val dirPath = Environment.DIRECTORY_DCIM + "/savedCats"
+        // Mime type of the content
+        val mime = "image/*"
+        // name of the saved image
         val fileName = cat.url.substring(cat.url.lastIndexOf('/') + 1)
-                                                            // type of the image .gif or .jpg from Uri
+        // type of the image .gif or .jpg from Uri
         val fileType = cat.url.substring(cat.url.lastIndexOf('.') + 1)
 
         val values = ContentValues().apply { // describe image
@@ -38,8 +39,8 @@ fun downloadAndSave(context: Context, cat: Cat) {
             put(MediaStore.MediaColumns.RELATIVE_PATH, dirPath)
         }
 
-        val resolver =
-            context.contentResolver                         // provides app. access to content model
+        // provides app. access to content model
+        val resolver = context.contentResolver
 
         if (fileType == "gif") downloadGif(context, cat.url, resolver, values)
         else downloadImage(context, cat.url, resolver, values)
@@ -75,12 +76,12 @@ private fun downloadGif(
         .submit()
         .get()
 
-    val buffer =
-        gifImage.buffer                                 // GifDrawable as ByteBuffer
-    val bytes =
-        ByteArray(buffer.capacity())                    // create ByteArray with size = buffer.size
-    (buffer.duplicate()
-        .clear() as ByteBuffer).get(bytes)              // duplicate buffer and copy into bytes
+    // GifDrawable as ByteBuffer
+    val buffer = gifImage.buffer
+    // create ByteArray with size = buffer.size
+    val bytes = ByteArray(buffer.capacity())
+    // duplicate buffer and copy into bytes
+    (buffer.duplicate().clear() as ByteBuffer).get(bytes)
 
     saveImage(context, resolver, values, null, bytes)
 }
@@ -100,15 +101,16 @@ private fun saveImage(
             ?: throw IOException("failed to create new MediaStore record.")
 
         when {
-            bitmap != null && gif == null ->                    // if bitmap
+            // if bitmap
+            bitmap != null && gif == null ->
 
                 resolver.openOutputStream(uri)?.use {
-                    if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)) {
+                    if (!bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, it)) {
                         showToast("Failed to save Image...", context)
                     } else showToast("Image saved.", context)
                 } ?: throw IOException("Failed to open output stream.")
-
-            bitmap == null && gif != null ->                    // if gif
+            // if gif
+            bitmap == null && gif != null ->
 
                 resolver.openOutputStream(uri)?.use {
                     it.write(gif, 0, gif.size)
