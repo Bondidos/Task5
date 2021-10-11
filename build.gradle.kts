@@ -19,8 +19,7 @@ subprojects {
         debug.set(false)
     }
 }
-
-detekt {
+task.register.detekt {
     toolVersion = "1.18.1"
     config = files("config/detekt/detekt.yml")
     buildUponDefaultConfig = true

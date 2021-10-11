@@ -27,15 +27,13 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
         // show icon
         savedInstanceState?.let {
             if (savedInstanceState.getBoolean(SHOW_NAVI_ICON)) {
-                binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
-                isShowNavigationIcon = true
-            } else binding.toolbarActionbar.navigationIcon = null
+                showActionBarIcon()
+            } else hideActionBarIcon()
         }
     }
 
     override fun navigateListFragment() {
-        binding.toolbarActionbar.navigationIcon = null
-        isShowNavigationIcon = false
+
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(
@@ -47,8 +45,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
     }
 
     override fun navigateDetailsFragment(id: String) {
-        binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
-        isShowNavigationIcon = true
+
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(
@@ -61,6 +58,16 @@ class MainActivity : AppCompatActivity(), FragmentNavigation {
 
     override fun finish() {
         super.finish()
+    }
+
+    private fun showActionBarIcon(){
+        binding.toolbarActionbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_ios_24)
+        isShowNavigationIcon = true
+    }
+
+    private fun hideActionBarIcon(){
+        binding.toolbarActionbar.navigationIcon = null
+        isShowNavigationIcon = false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
